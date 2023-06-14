@@ -42,7 +42,7 @@ class Analytics {
     accountSid: flexManager?.serviceConfiguration.account_sid || '',
     plugin: packageJSON.name,
     pluginVersion: packageJSON.version,
-    originalPluginName: packageJSON.name,
+    originalPluginName: packageJSON.id,
   };
 
   private static get segment(): HTMLIFrameElement {
