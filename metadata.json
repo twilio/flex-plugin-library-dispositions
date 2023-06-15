@@ -1,0 +1,24 @@
+{
+    "name":"flex-dispositions-plugin",
+    "friendly_name" :"Disposition",
+    "description":"Allows to provide a custom list of dispositions that agents may select before completing their task",
+    "support":"flex-runtime-support@twilio.com@gmail.com",
+    "created_by":"Twilio",
+    "twilio_managed":"false",
+    "repo_url" : "https://github.com/twilio/flex-plugin-library-dispositions",
+    "version_details" : {
+      "version":"1.0.0",
+      "compatible_with":"2.1.1 onwards",
+      "released_by":"flex-runtime-team",
+      "changelog":"",
+      "attributes" : [{
+        "name": "TWILIO_FLEX_WORKSPACE_SID",
+        "friendly_name": "Flex Voice Workspace ID",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "Flex Voice Workspace SID",
+        "help_link" : ""
+      }
+      ]
+    }
+}
