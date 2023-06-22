@@ -2,7 +2,6 @@ import * as Flex from '@twilio/flex-ui';
 
 import DispositionTab from '../../components/DispositionTab';
 import { getDispositionsForQueue, isNotesEnabled } from '../../utils/config';
-import { StringTemplates } from '../strings/Disposition';
 
 
 export function addDispositionTab(flex: typeof Flex, manager: Flex.Manager) {

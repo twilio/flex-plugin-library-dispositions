@@ -4,7 +4,7 @@ import packageJSON from '../../package.json';
 const flexManager = window?.Twilio?.Flex?.Manager?.getInstance();
 
 export enum Event {
-  CONFERENCE_NUMBER_DIALED = 'Conference Number Dialed',
+  DISPOSITION_SELECTED = 'Disposition Selected',
 }
 
 type CommonPropertiesType = {
