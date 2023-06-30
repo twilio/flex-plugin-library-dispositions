@@ -7,6 +7,7 @@ import { DispositionsState } from '../states';
 import { DispositionsNotification } from '../notifications/DispositionNotification';
 import TaskRouterService from '../../service/TaskRouterService';
 import { ErrorManager, FlexPluginErrorType } from '../../utils/ErrorManager';
+import Analytics, {Event} from '../../utils/Analytics';
 
 const handleAbort = (flex: typeof Flex, abortFunction: any) => {
   flex.Notifications.showNotification(DispositionsNotification.DispositionRequired);
@@ -73,7 +74,11 @@ export function setDispositionBeforeCompleteTask(flex: typeof Flex, manager: Fle
           content: taskDisposition.notes,
         };
       }
-
+      if(taskDisposition.disposition || taskDisposition.notes){
+        Analytics.track(Event.DISPOSITION_SELECTED,{
+          taskSid: payload.task.taskSid
+        })
+      }
       try {
         await TaskRouterService.updateTaskAttributes(
           payload.task.taskSid,

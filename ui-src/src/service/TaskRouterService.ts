@@ -3,6 +3,7 @@ import { TaskHelper } from '@twilio/flex-ui';
 
 import ApiService from './ApiService';
 import { EncodedParams } from '../types/Params';
+import { ErrorManager, FlexPluginErrorType } from '../utils/ErrorManager';
 
 interface UpdateTaskAttributesResponse {
   success: boolean;
@@ -73,11 +74,11 @@ class TaskRouterService extends ApiService {
     }
   }
 
-  async updateTaskAttributes(
+  updateTaskAttributes = async (
     taskSid: string,
     attributesUpdate: object,
     deferUpdates: boolean = false,
-  ): Promise<boolean> {
+  ): Promise<boolean> => {
     if (deferUpdates) {
       // Defer update; merge new attrs into local storage
       this.addToLocalStorage(taskSid, attributesUpdate);
@@ -91,37 +92,45 @@ class TaskRouterService extends ApiService {
       return true;
     }
 
-    const result = await this.updateTaskAttribute(taskSid, JSON.stringify(mergedAttributesUpdate));
-
-    if (result.success) {
-      // we've pushed updates; remove pending attributes
-      this.removeFromLocalStorage(taskSid);
-    }
-    console.log(`result success answer : ${result.success}`);
-    return result.success;
-  }
-
-  updateTaskAttribute = async (taskSid: string, attributesUpdate: string): Promise<UpdateTaskAttributesResponse> => {
-    const encodedParams: EncodedParams = {
-      Token: encodeURIComponent(this.manager.user.token),
-      taskSid: encodeURIComponent(taskSid),
-      attributesUpdate: encodeURIComponent(attributesUpdate),
-    };
-
-    return this.fetchJsonWithReject<UpdateTaskAttributesResponse>(
-      `https://${this.serverlessDomain}/disposition/update-task-attributes`,
-      {
-        method: 'post',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: this.buildBody(encodedParams),
-      },
-    ).then((response): UpdateTaskAttributesResponse => {
-      return {
-        ...response,
+    return new Promise((resolve,reject) =>{
+      const encodedParams: EncodedParams = {
+        Token: encodeURIComponent(this.manager.user.token),
+        taskSid: encodeURIComponent(taskSid),
+        attributesUpdate: encodeURIComponent(JSON.stringify(mergedAttributesUpdate)),
       };
-    });
-  };
-
+  
+      this.fetchJsonWithReject<UpdateTaskAttributesResponse>(
+        `https://${this.serverlessDomain}/disposition/update-task-attributes`,
+        {
+          method: 'post',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: this.buildBody(encodedParams),
+        },
+      ).then((response: UpdateTaskAttributesResponse) => {
+        if (response.success) {
+          // we've pushed updates; remove pending attributes
+          this.removeFromLocalStorage(taskSid);
+        }
+        resolve(response.success);
+      })
+      .catch((e)=>{
+        console.error(`Could not update task attributes for the task ${taskSid}`, e);
+        ErrorManager.createAndProcessError(
+          `Could not update task attributes for the task ${taskSid}\r\n`,
+          {
+            type: FlexPluginErrorType.serverless,
+            description:
+              e instanceof Error
+                ? `${e.message}`
+                : `Could not update task attributes for the task ${taskSid}\r\n`,
+            context: 'Plugin.TaskRouterService',
+            wrappedError: e,
+          },
+        );
+        reject(e);
+      });
+    })
+  }
 }
 
 export default new TaskRouterService();

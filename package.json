@@ -1,5 +1,5 @@
 {
-  "name": "plibo-flex-plugin-library-dispositions",
+  "name": "plibc-dispositions",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -36,6 +36,6 @@
     "twilio-run": "3.4.2"
   },
   "engines": {
-    "node": "14"
+    "node": ">=14"
   }
 }

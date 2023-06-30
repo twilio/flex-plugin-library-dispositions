@@ -38,7 +38,6 @@ const {
   };
   
   export const getDispositionsForQueue = (queueSid: string): string[] => {
-
     let dispositions = [...global_dispositions];
   
     if (queueSid && per_queue[queueSid] && per_queue[queueSid].dispositions) {
