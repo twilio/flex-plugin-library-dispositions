@@ -1,8 +1,8 @@
 {
-  "name": "plibc-flex-plugin-library-dispositions",
+  "name": "plibc-dispositions",
   "version": "1.0.0",
   "private": true,
-  "id": "plibc-flex-plugin-library-dispositions",
+  "id": "plibc-dispositions",
   "scripts": {
     "prebuild": "rimraf build && npm run bootstrap",
     "postinstall": "flex-plugin pre-script-check",
