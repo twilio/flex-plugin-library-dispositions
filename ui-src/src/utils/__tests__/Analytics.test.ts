@@ -9,8 +9,8 @@ describe('Analytics', () => {
   const mockCommonProperties = {
     accountSid: '',
     flexUiVersion: '2.1.1',
-    originalPluginName: 'plibc-flex-plugin-library-dispositions',
-    plugin: 'plibc-flex-plugin-library-dispositions',
+    originalPluginName: 'plibc-dispositions',
+    plugin: 'plibc-dispositions',
     pluginVersion: '1.0.0',
     product: 'Flex',
     workerSid: '',
