@@ -68,7 +68,7 @@ class ErrorManagerImpl {
   public createAndProcessError(
     message: string,
     content: FlexPluginErrorContents = {},
-    showNotification: boolean = true,
+    showNotification = true,
   ): FlexPluginError {
     const error = new FlexPluginError(message, content);
     return this.processError(error, showNotification);

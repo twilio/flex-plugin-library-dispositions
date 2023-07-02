@@ -3,15 +3,10 @@ import * as Flex from '@twilio/flex-ui';
 import DispositionTab from '../../components/DispositionTab';
 import { getDispositionsForQueue, isNotesEnabled } from '../../utils/config';
 
-
 export function addDispositionTab(flex: typeof Flex, manager: Flex.Manager) {
   const strings = manager.strings;
   flex.TaskCanvasTabs.Content.add(
-    <Flex.Tab
-      key="disposition"
-      uniqueName="disposition"
-      label="Disposition"
-    >
+    <Flex.Tab key="disposition" uniqueName="disposition" label="Disposition">
       <DispositionTab key="disposition-tab-content" />
     </Flex.Tab>,
     {
@@ -21,4 +16,4 @@ export function addDispositionTab(flex: typeof Flex, manager: Flex.Manager) {
         (Flex.TaskHelper.isTaskAccepted(task) || Flex.TaskHelper.isInWrapupMode(task)),
     },
   );
-};
+}

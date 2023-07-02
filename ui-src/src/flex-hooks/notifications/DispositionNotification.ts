@@ -7,11 +7,11 @@ export enum DispositionsNotification {
   DispositionRequired = 'PSDispositionRequired',
 }
 
-export default (flex:typeof Flex, manager: Flex.Manager) => {
+export default (flex: typeof Flex, manager: Flex.Manager) => {
   dispositionRequired(flex, manager);
-}
+};
 // Return an array of Flex.Notification
-function dispositionRequired (flex: typeof Flex, manager: Flex.Manager){
+function dispositionRequired(flex: typeof Flex, manager: Flex.Manager) {
   flex.Notifications.registerNotification({
     id: DispositionsNotification.DispositionRequired,
     type: Flex.NotificationType.error,

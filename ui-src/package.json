@@ -13,9 +13,7 @@
     "@twilio-paste/core": "^17.2.0",
     "@twilio-paste/icons": "^9.4.2",
     "@twilio/flex-dev-utils": "^5.1.3",
-    "@twilio/flex-plugin-scripts": "^6.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "@twilio/flex-plugin-scripts": "^6.1.2"
   },
   "devDependencies": {
     "@babel/preset-env": "7.20.2",
@@ -34,12 +32,15 @@
     "jest-fetch-mock": "3.0.3",
     "jest-junit": "12.0.0",
     "react-test-renderer": "17.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-select": "^5.5.0",
     "twilio": "3.84.1"
   },
   "jest-junit": {
     "outputDirectory": "./test-results"
   },
   "engines": {
-    "node": ">=14"
+     "node": "^16 || ^18"
   }
 }

@@ -4,8 +4,8 @@ import { FlexPlugin } from '@twilio/flex-plugin';
 
 import CustomizePasteElements from './utils/PasteThemeProvider';
 import { setDispositionBeforeCompleteTask } from './flex-hooks/actions/CompleteTask';
-import { addDispositionTab  } from './flex-hooks/components/TaskCanvasTabs';
-import  Dispositions  from './flex-hooks/notifications/DispositionNotification';
+import { addDispositionTab } from './flex-hooks/components/TaskCanvasTabs';
+import Dispositions from './flex-hooks/notifications/DispositionNotification';
 import AddReducers from '../src/flex-hooks/redux';
 import DispositionString from './flex-hooks/strings/Disposition';
 const PLUGIN_NAME = 'Disposition';

@@ -35,7 +35,7 @@ const dispositionsSlice = createSlice({
     },
   },
 });
- 
+
 export const reduxNamespace = 'dispositions';
 
 export interface AppState {
