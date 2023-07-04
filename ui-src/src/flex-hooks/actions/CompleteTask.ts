@@ -7,7 +7,7 @@ import { DispositionsState } from '../states';
 import { DispositionsNotification } from '../notifications/DispositionNotification';
 import TaskRouterService from '../../service/TaskRouterService';
 import { ErrorManager, FlexPluginErrorType } from '../../utils/ErrorManager';
-import Analytics, {Event} from '../../utils/Analytics';
+import Analytics, { Event } from '../../utils/Analytics';
 
 const handleAbort = (flex: typeof Flex, abortFunction: any) => {
   flex.Notifications.showNotification(DispositionsNotification.DispositionRequired);
@@ -36,7 +36,7 @@ export function setDispositionBeforeCompleteTask(flex: typeof Flex, manager: Fle
 
       // First, check if a disposition and/or notes are set.
       const { tasks } = (manager.store.getState() as AppState)[reduxNamespace] as DispositionsState;
-      
+
       if (!tasks || !tasks[payload.task.taskSid]) {
         if (isRequireDispositionEnabledForQueue(payload.task.queueSid) && numDispositions > 0) {
           handleAbort(flex, abortFunction);
@@ -74,10 +74,10 @@ export function setDispositionBeforeCompleteTask(flex: typeof Flex, manager: Fle
           content: taskDisposition.notes,
         };
       }
-      if(taskDisposition.disposition || taskDisposition.notes){
-        Analytics.track(Event.DISPOSITION_SELECTED,{
-          taskSid: payload.task.taskSid
-        })
+      if (taskDisposition.disposition || taskDisposition.notes) {
+        Analytics.track(Event.DISPOSITION_SELECTED, {
+          taskSid: payload.task.taskSid,
+        });
       }
       try {
         await TaskRouterService.updateTaskAttributes(

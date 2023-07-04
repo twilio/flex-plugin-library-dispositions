@@ -10,8 +10,6 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '.*\\.d\\.ts',
     '/components/.*./index\\.ts',
-    'polyfilled\\.ts',
-    'createAction.ts',
     'jest.config.js',
     'webpack.*\\.js',
     './coverage',

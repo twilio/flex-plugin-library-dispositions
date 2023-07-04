@@ -9,7 +9,6 @@ interface UpdateTaskAttributesResponse {
   success: boolean;
 }
 
-
 class TaskRouterService extends ApiService {
   private instanceSid = this.manager.serviceConfiguration.flex_service_instance_sid;
 
@@ -74,11 +73,7 @@ class TaskRouterService extends ApiService {
     }
   }
 
-  updateTaskAttributes = async (
-    taskSid: string,
-    attributesUpdate: object,
-    deferUpdates: boolean = false,
-  ): Promise<boolean> => {
+  updateTaskAttributes = async (taskSid: string, attributesUpdate: object, deferUpdates = false): Promise<boolean> => {
     if (deferUpdates) {
       // Defer update; merge new attrs into local storage
       this.addToLocalStorage(taskSid, attributesUpdate);
@@ -92,13 +87,13 @@ class TaskRouterService extends ApiService {
       return true;
     }
 
-    return new Promise((resolve,reject) =>{
+    return new Promise((resolve, reject) => {
       const encodedParams: EncodedParams = {
         Token: encodeURIComponent(this.manager.user.token),
         taskSid: encodeURIComponent(taskSid),
         attributesUpdate: encodeURIComponent(JSON.stringify(mergedAttributesUpdate)),
       };
-  
+
       this.fetchJsonWithReject<UpdateTaskAttributesResponse>(
         `https://${this.serverlessDomain}/disposition/update-task-attributes`,
         {
@@ -106,31 +101,27 @@ class TaskRouterService extends ApiService {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: this.buildBody(encodedParams),
         },
-      ).then((response: UpdateTaskAttributesResponse) => {
-        if (response.success) {
-          // we've pushed updates; remove pending attributes
-          this.removeFromLocalStorage(taskSid);
-        }
-        resolve(response.success);
-      })
-      .catch((e)=>{
-        console.error(`Could not update task attributes for the task ${taskSid}`, e);
-        ErrorManager.createAndProcessError(
-          `Could not update task attributes for the task ${taskSid}\r\n`,
-          {
+      )
+        .then((response: UpdateTaskAttributesResponse) => {
+          if (response.success) {
+            // we've pushed updates; remove pending attributes
+            this.removeFromLocalStorage(taskSid);
+          }
+          resolve(response.success);
+        })
+        .catch((e) => {
+          console.error(`Could not update task attributes for the task ${taskSid}`, e);
+          ErrorManager.createAndProcessError(`Could not update task attributes for the task ${taskSid}\r\n`, {
             type: FlexPluginErrorType.serverless,
             description:
-              e instanceof Error
-                ? `${e.message}`
-                : `Could not update task attributes for the task ${taskSid}\r\n`,
+              e instanceof Error ? `${e.message}` : `Could not update task attributes for the task ${taskSid}\r\n`,
             context: 'Plugin.TaskRouterService',
             wrappedError: e,
-          },
-        );
-        reject(e);
-      });
-    })
-  }
+          });
+          reject(e);
+        });
+    });
+  };
 }
 
 export default new TaskRouterService();

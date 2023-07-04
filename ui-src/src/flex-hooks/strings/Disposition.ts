@@ -25,4 +25,3 @@ export default (flex: typeof Flex, manager: Flex.Manager) => {
     ...customStrings,
   } as any;
 };
-
