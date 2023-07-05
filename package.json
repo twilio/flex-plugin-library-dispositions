@@ -16,7 +16,7 @@
     "@twilio-labs/serverless-api": "^5.5.0",
     "lodash": "^4.17.21",
     "twilio-flex-token-validator": "1.5.8",
-    "twilio": "4.0.0"
+    "twilio": "^4.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "7.20.2",
