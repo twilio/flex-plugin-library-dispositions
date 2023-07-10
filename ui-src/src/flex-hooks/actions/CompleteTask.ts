@@ -80,13 +80,9 @@ export function setDispositionBeforeCompleteTask(flex: typeof Flex, manager: Fle
         });
       }
       try {
-        await TaskRouterService.updateTaskAttributes(
-          payload.task.taskSid,
-          {
-            conversations: newConvAttributes,
-          },
-          true,
-        );
+        await TaskRouterService.updateTaskAttributes(payload.task.taskSid, {
+          conversations: newConvAttributes,
+        });
       } catch (error) {
         console.log(`Failed to set disposition attributes for ${payload.task.taskSid} to ${newConvAttributes}`, error);
       }
