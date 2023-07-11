@@ -15,7 +15,7 @@ const retryHandler = require(Runtime.getFunctions()['twilio-wrappers/retry-handl
  * more explained here https://www.twilio.com/docs/taskrouter/api/task#task-version
  */
 exports.updateTaskAttributes = async function updateTaskAttributes(parameters) {
-  const { taskSid, attributesUpdate } = parameters;
+  const { taskSid, attributesUpdate, context } = parameters;
 
   if (!isString(taskSid))
     throw new Error('Invalid parameters object passed. Parameters must contain the taskSid string');
@@ -23,7 +23,9 @@ exports.updateTaskAttributes = async function updateTaskAttributes(parameters) {
     throw new Error('Invalid parameters object passed. Parameters must contain attributesUpdate JSON string');
 
   try {
-    const taskContextURL = `https://taskrouter.twilio.com/v1/Workspaces/${process.env.TWILIO_FLEX_WORKSPACE_SID}/Tasks/${taskSid}`;
+    const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
+    const hostName = region ? `https://taskrouter.${region}.twilio.com` : "https://taskrouter.twilio.com";
+    const taskContextURL = `${hostName}/v1/Workspaces/${process.env.TWILIO_FLEX_WORKSPACE_SID}/Tasks/${taskSid}`;
     const config = {
       auth: {
         username: process.env.ACCOUNT_SID,
