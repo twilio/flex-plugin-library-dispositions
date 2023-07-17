@@ -8,7 +8,8 @@
     "lint": "eslint --ext ts --ext tsx ui-src/src/",
     "lint:fix": "npm run lint -- --fix",
     "makeassetsprivate": "cd ui-src/build && sh ../../scripts/makeAssetsPrivate.sh",
-    "build": "cd ui-src && twilio flex:plugins:build && cd .. && npm run makeassetsprivate"
+    "build": "cd ui-src && twilio flex:plugins:build && cd .. && npm run makeassetsprivate",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@twilio-labs/runtime-helpers": "^0.1.2",
@@ -40,7 +41,8 @@
     "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-prettier": "^4.2.1"
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0"
   },
   "engines": {
     "node": "16"
