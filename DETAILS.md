@@ -13,17 +13,21 @@ Plugin is ready to use once it is installed and disposition codes are defined in
 {
     "account_sid": "ACXXXXXXXXXXXXXXXXX",
     "ui_attributes": {
-        "dispositions": {
-            "enable_notes": true,
-            "require_disposition": true,
-            "global_dispositions": ['Disposition 1','Disposition 2','Disposition 3'],
-            "per_queue": {
-                "QSXXXXXXXXXXXXXX": {
+        "custom_data":{
+            "features":{
+                "dispositions": {
+                    "enable_notes": true,
                     "require_disposition": true,
-                    "dispositions": ['Disposition 4','Disposition 5','Disposition 6']
+                    "global_dispositions": ['Disposition 1','Disposition 2','Disposition 3'],
+                    "per_queue": {
+                        "QSXXXXXXXXXXXXXX": {
+                            "require_disposition": true,
+                            "dispositions": ['Disposition 4','Disposition 5','Disposition 6']
+                        }
+                    }
                 }
             }
-        },
+        }
     }
 }
 ```
