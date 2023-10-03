@@ -1,6 +1,6 @@
 {
   "name": "plibc-dispositions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "test": "jest",
@@ -45,6 +45,6 @@
     "husky": "^8.0.0"
   },
   "engines": {
-    "node": "16"
+    "node": "18"
   }
 }

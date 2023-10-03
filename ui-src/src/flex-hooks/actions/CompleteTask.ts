@@ -7,7 +7,7 @@ import { DispositionsState } from '../states';
 import { DispositionsNotification } from '../notifications/DispositionNotification';
 import TaskRouterService from '../../service/TaskRouterService';
 import { ErrorManager, FlexPluginErrorType } from '../../utils/ErrorManager';
-import Analytics, { Event } from '../../utils/Analytics';
+import { Analytics, Event } from '../../utils/Analytics';
 
 const handleAbort = (flex: typeof Flex, abortFunction: any) => {
   flex.Notifications.showNotification(DispositionsNotification.DispositionRequired);
