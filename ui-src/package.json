@@ -1,10 +1,11 @@
 {
-  "name": "plibc-dispositions",
+  "name": "aplibc-dispositions",
   "version": "1.0.0",
   "private": true,
-  "id": "plibc-dispositions",
+  "id": "aplibc-dispositions",
   "scripts": {
     "prebuild": "rimraf build && npm run bootstrap",
+    "deploy": "twilio flex:plugins:deploy --major --changelog \"Serverless disposition\" --description \"disposition test\"",
     "postinstall": "flex-plugin pre-script-check",
     "prestart": "npm run bootstrap",
     "test": "jest"
@@ -37,6 +38,6 @@
     "outputDirectory": "./test-results"
   },
   "engines": {
-     "node": "16"
+    "node": "16"
   }
 }

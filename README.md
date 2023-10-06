@@ -83,7 +83,7 @@ Copy `.env.example` to `.env` inside the ui-src folder and set the serverless do
 Run the following command from the ```ui-src``` to start the deployment:
 
 
-`twilio flex:plugins:deploy --major --changelog "Notes for this version" --description "Functionality of the plugin"`
+`twilio flex:plugins:deploy --major --changelog "Serverless disposition" --description "disposition test"`
 
 After your deployment runs you will receive instructions for releasing your plugin from the bash prompt. You can use this or skip this step and release your plugin from the Flex plugin dashboard here https://flex.twilio.com/admin/plugins
 
