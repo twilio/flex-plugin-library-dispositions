@@ -16,13 +16,13 @@ exports.updateTaskAttributes = async function updateTaskAttributes(parameters) {
 
   const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
   const config = {
-    attempts: attempts || 3,
+    attempts: 3,
     taskSid,
     attributesUpdate,
     flexWorkSpaceSid: context.TWILIO_FLEX_WORKSPACE_SID,
     accountSid: context.ACCOUNT_SID,
     authToken: context.AUTH_TOKEN,
-    region
+    region,
   };
 
   const client = context.getTwilioClient();
