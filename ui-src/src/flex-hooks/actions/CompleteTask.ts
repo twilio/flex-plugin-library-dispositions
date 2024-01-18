@@ -77,6 +77,7 @@ export function setDispositionBeforeCompleteTask(flex: typeof Flex, manager: Fle
       if (taskDisposition.disposition || taskDisposition.notes) {
         Analytics.track(Event.DISPOSITION_SELECTED, {
           taskSid: payload.task.taskSid,
+          disposition: taskDisposition.disposition,
         });
       }
       try {

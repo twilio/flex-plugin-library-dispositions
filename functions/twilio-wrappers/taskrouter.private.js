@@ -12,11 +12,11 @@ const { TaskRouterUtils } = require('@twilio/flex-plugins-library-utils');
  * more explained here https://www.twilio.com/docs/taskrouter/api/task#task-version
  */
 exports.updateTaskAttributes = async function updateTaskAttributes(parameters) {
-  const { taskSid, attributesUpdate, context } = parameters;
+  const { taskSid, attributesUpdate, context, attempts } = parameters;
 
   const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
   const config = {
-    attempts: 3,
+    attempts: attempts || 3,
     taskSid,
     attributesUpdate,
     flexWorkSpaceSid: context.TWILIO_FLEX_WORKSPACE_SID,
