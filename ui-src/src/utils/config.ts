@@ -22,7 +22,7 @@ export const isNotesEnabled = () => {
   return enable_notes;
 };
 
-export const getNotesMaxLengh = () => {
+export const getNotesMaxLength = () => {
   return notes_max_length;
 }
 
