@@ -9,7 +9,7 @@ import { HelpText } from '@twilio-paste/core/help-text';
 import { Box } from '@twilio-paste/core/box';
 import { debounce } from 'lodash';
 
-import { getDispositionsForQueue, isNotesEnabled, isRequireDispositionEnabledForQueue } from '../utils/config';
+import { getDispositionsForQueue, isNotesEnabled, isRequireDispositionEnabledForQueue, getNotesMaxLength } from '../utils/config';
 import { AppState } from '../flex-hooks/states';
 import { reduxNamespace } from '../flex-hooks/states';
 import { updateDisposition, DispositionsState } from '../flex-hooks/states';
@@ -20,7 +20,7 @@ export interface OwnProps {
 }
 
 const DispositionTab = (props: OwnProps) => {
-  const NOTES_MAX_LENGTH = 100;
+  const NOTES_MAX_LENGTH = getNotesMaxLength() ?? 100;
   const [disposition, setDisposition] = useState('');
   const [notes, setNotes] = useState('');
 
