@@ -12,6 +12,7 @@ interface UIAttributes extends FlexUIAttributes {
 const { custom_data } = Flex.Manager.getInstance().configuration as UIAttributes;
 const {
   enable_notes = false,
+  notes_max_length = 100,
   require_disposition = false,
   global_dispositions = [],
   per_queue = {},
@@ -20,6 +21,10 @@ const {
 export const isNotesEnabled = () => {
   return enable_notes;
 };
+
+export const getNotesMaxLengh = () => {
+  return notes_max_length;
+}
 
 export const isRequireDispositionEnabledForQueue = (queueSid: string) => {
   let required = require_disposition;
