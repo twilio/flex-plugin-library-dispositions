@@ -20,7 +20,7 @@ export interface OwnProps {
 }
 
 const DispositionTab = (props: OwnProps) => {
-  const NOTES_MAX_LENGTH = 100;
+  const NOTES_MAX_LENGTH = parseInt(process.env.NOTES_MAX_LENGTH || '<NOTES_MAX_LENGTH>');
   const [disposition, setDisposition] = useState('');
   const [notes, setNotes] = useState('');
 
