@@ -1,3 +1,7 @@
+## version 1.0.2
+
+- Bug fixes
+
 ## version 1.0.1
 
 - Introduced the usage of flex-ui-telemetry package instead of individual classes.
