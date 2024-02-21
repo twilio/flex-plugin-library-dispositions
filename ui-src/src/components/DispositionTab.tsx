@@ -19,33 +19,41 @@ export interface OwnProps {
   task?: ITask;
 }
 
-const DispositionTab = (props: OwnProps) => {
+const DispositionTab = ({task}: OwnProps) => {
+  const NOTES_MAX_LENGTH = 100;
+  const taskSid = task && task?.taskSid || '';
   const NOTES_MAX_LENGTH = parseInt(process.env.NOTES_MAX_LENGTH || '<NOTES_MAX_LENGTH>');
   const [disposition, setDisposition] = useState('');
   const [notes, setNotes] = useState('');
 
   const dispatch = useDispatch();
   const { tasks } = useSelector((state: AppState) => state[reduxNamespace] as DispositionsState);
+  const dispositionForTask = tasks && tasks[taskSid] ? tasks[taskSid].disposition : '';
+  const notesForTask = tasks && tasks[taskSid] ? tasks[taskSid].notes : '';
   const strings = Manager.getInstance().strings as any;
 
-  const updateStore = () => {
-    if (!props.task) return;
+  useEffect(()=>{
+    setNotes(notesForTask)
+  },[task?.taskSid])
+
+  const updateStore = (value="") => {
+    if (!task) return;
 
     let payload = {
-      taskSid: props.task.taskSid,
+      taskSid: task.taskSid,
       disposition: '',
       notes: '',
     };
 
-    if (tasks && tasks[props.task.taskSid]) {
+    if (tasks && tasks[task.taskSid]) {
       payload = {
         ...payload,
-        ...tasks[props.task.taskSid],
+        ...tasks[task.taskSid],
       };
     }
 
-    if (disposition) {
-      payload.disposition = disposition;
+    if (value) {
+      payload.disposition = value;
     }
 
     if (isNotesEnabled() && notes) {
@@ -57,21 +65,12 @@ const DispositionTab = (props: OwnProps) => {
   const updateStoreDebounced = debounce(updateStore, 250, { maxWait: 1000 });
 
   useEffect(() => {
-    if (tasks && props.task && tasks[props.task.taskSid]) {
-      if (tasks[props.task.taskSid].disposition) {
-        setDisposition(tasks[props.task.taskSid].disposition);
-      }
-
-      if (isNotesEnabled() && tasks[props.task.taskSid].notes) {
-        setNotes(tasks[props.task.taskSid].notes);
+    if (tasks && task && tasks[task.taskSid]) {
+      if (isNotesEnabled() && tasks[task.taskSid].notes) {
+        setNotes(tasks[task.taskSid].notes);
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (!disposition) return;
-    updateStore();
-  }, [disposition]);
 
   useEffect(() => {
     if (!isNotesEnabled()) return;
@@ -82,32 +81,32 @@ const DispositionTab = (props: OwnProps) => {
     // Pop the disposition tab when the task enters wrapping status.
     // We do this here because WrapupTask does not handle a customer-ended task,
     // and doing this in the taskWrapup event seems to not work.
-    if (props.task?.status === 'wrapping') {
+    if (task?.status === 'wrapping') {
       Actions.invokeAction('SetComponentState', {
         name: 'AgentTaskCanvasTabs',
         state: { selectedTabName: 'disposition' },
       });
     }
-  }, [props.task?.status]);
+  }, [task?.status]);
 
   return (
     <Box padding="space80">
       <Stack orientation="vertical" spacing="space80">
-        {getDispositionsForQueue(props.task?.queueSid ?? '').length > 0 && (
+        {getDispositionsForQueue(task?.queueSid ?? '').length > 0 && (
           <RadioGroup
-            name={`${props.task?.sid}-disposition`}
-            value={disposition}
+            name={`${task?.sid}-disposition`}
+            value={dispositionForTask}
             legend={strings[StringTemplates.SelectDispositionTitle]}
             helpText={strings[StringTemplates.SelectDispositionHelpText]}
-            onChange={(value) => setDisposition(value)}
-            required={isRequireDispositionEnabledForQueue(props.task?.queueSid ?? '')}
+            onChange={(value) => updateStore(value)}
+            required={isRequireDispositionEnabledForQueue(task?.queueSid ?? '')}
           >
-            {getDispositionsForQueue(props.task?.queueSid ?? '').map((disp) => (
+            {getDispositionsForQueue(task?.queueSid ?? '').map((disp,i) => (
               <Radio
-                id={`${props.task?.sid}-disposition-${disp}`}
+                id={`${task?.sid}-disposition-${disp}${i}`}
                 value={disp}
-                name={`${props.task?.sid}-disposition`}
-                key={`${props.task?.sid}-disposition-${disp}`}
+                name={`${task?.sid}-disposition`}
+                key={`${task?.sid}-disposition-${disp}${i}`}
               >
                 {disp}
               </Radio>
@@ -120,8 +119,8 @@ const DispositionTab = (props: OwnProps) => {
             <TextArea
               onChange={(e) => setNotes(e.target.value)}
               aria-describedby="notes_help_text"
-              id={`${props.task?.sid}-notes`}
-              name={`${props.task?.sid}-notes`}
+              id={`${task?.sid}-notes`}
+              name={`${task?.sid}-notes`}
               value={notes}
               maxLength={NOTES_MAX_LENGTH}
             />
